@@ -5,13 +5,13 @@
   const popup = document.getElementById('popup-container');
   const notification = document.getElementById('notification-container');
   const finalMessage = document.getElementById('final-message');
-  
+  const finalMessageShowWord = document.getElementById('final-message-show-word');
   const figureParts = document.querySelectorAll('.figure-part');
   const words = ['bedroom', 'college', 'forward', 'nationalist', 'observation', 'interactive',  'museum', 'tactic', 'direct']
-
   const correctLetters = [];
-  wrongLetters = [];
+  const wrongLetters = [];
 
+  //Select a random word from the words array
   const selectRandomWord = (words) => {
     return words[Math.floor(Math.random() * words.length)];
   }
@@ -33,7 +33,7 @@
       }
     `
     const innerWord = wordEl.innerText.replace(/\n/g, '');
-    
+
     if(innerWord === selectedWord){
       finalMessage.innerText = 'You Won 😀😀😀';
       popup.style.display = 'flex';
@@ -41,7 +41,7 @@
   }
 
   //Update the wrong letters
-  const updateWrondLettersEl = () => {
+  const updateWrongLettersEl = () => {
     //Display wrong letters
     wrongLettersElement.innerHTML = `
       ${wrongLetters.length > 0 ? '<p>Wrong</p>' : ''}
@@ -60,11 +60,12 @@
     //Check if lost the game
     if (wrongLetters.length === figureParts.length){
       finalMessage.innerText = 'Game Over 🙁🙁🙁';
+      finalMessageShowWord.innerText = `The hidden word was: ${selectedWord}`
       popup.style.display = 'flex';
     }
   }
 
-  
+
   const showNotification = () => {
     notification.classList.add('show');
     setTimeout(()=>{
@@ -74,7 +75,7 @@
 
   //Keydown letter press
   window.addEventListener('keydown', (event) => {
-    //key code is depracted. Using the regex allows us to enforce English chars
+    //key code is deprecated. Using the regex allows us to enforce English chars
     const typedLetter = event.key;
     const reg = /^\w{1}$/i; // only English chars
 
@@ -89,7 +90,7 @@
       } else { // if it's not in the seleted word
         if (!wrongLetters.includes(typedLetter)){ // and typed already
           wrongLetters.push(typedLetter); // add the letter to wrong letters
-          updateWrondLettersEl();
+          updateWrongLettersEl();
         } else {
           showNotification();
         }
@@ -102,12 +103,16 @@
     //Empty the array
     correctLetters.splice(0);
     wrongLetters.splice(0);
+    //Select a new random word
     selectedWord = selectRandomWord(words);
     displayWord();
-    updateWrondLettersEl();
+    updateWrongLettersEl();
+    //hide the popup
     popup.style.display = 'none';
   })
 
+
+  //Start the game when ready
   displayWord();
 })();
 
