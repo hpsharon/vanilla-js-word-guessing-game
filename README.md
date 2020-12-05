@@ -1,7 +1,4 @@
-\*\*
 
-## A simple form validator written with vanilla.js
+## Hang man game written with Vanilla.js and SVG
+[Demo](https://vanilla-js-word-guessing-game.vercel.app/)
 
-[Demo](https://vanilla-js-form-validator.vercel.app/)
-\*\*
-# vanilla-js-word-guessing-game
